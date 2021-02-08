@@ -1,5 +1,6 @@
 <template>
   <div id="home">
+    <h1>TEST</h1>
     <LazyHydrate when-idle>
       <SfHero class="hero">
         <SfHeroItem
@@ -108,9 +109,26 @@ import {
 import InstagramFeed from '~/components/InstagramFeed.vue';
 import MobileStoreBanner from '~/components/MobileStoreBanner.vue';
 import LazyHydrate from 'vue-lazy-hydration';
+import { useProduct, productGetters } from '@vue-storefront/commercetools'
+import { computed } from '@vue/composition-api';
 
 export default {
   name: 'Home',
+  setup(context) {
+    const id = '2172e7f0-8348-484a-a4e2-7c4b72006038'
+    const { products, search } = useProduct()
+
+    search({ id })
+
+    const product = computed(() => productGetters.getAttributes(product.value[0]))
+
+    console.log(`Result: ${products}`)
+    console.log(products)
+
+    return {
+      product
+    };
+  },
   components: {
     InstagramFeed,
     SfHero,

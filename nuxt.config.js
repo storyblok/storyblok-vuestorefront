@@ -70,22 +70,22 @@ export default {
     ['@vue-storefront/nuxt-theme'],
     ['@vue-storefront/commercetools/nuxt', {
       api: {
-        uri: 'https://api.commercetools.com/vsf-ct-dev/graphql',
-        authHost: 'https://auth.sphere.io',
-        projectKey: 'vsf-ct-dev',
-        clientId: 'RT4iJGDbDzZe4b2E6RyeNe9s',
-        clientSecret: '5eBt3yfZJWw1j7V6kXjfKXpuFP-YQXpg',
+        uri: 'https://api.europe-west1.gcp.commercetools.com/vsf-demo/graphql',
+        authHost: 'https://auth.europe-west1.gcp.commercetools.com',
+        projectKey: 'vsf-demo',
+        clientId: 'LIQvzIAS6m0T4r-EqrhoktP4',
+        clientSecret: 'UqpQfeUmv88lIS60VEooEeT9o2PTYwkJ',
         scopes: [
-          'manage_products:vsf-ct-dev',
-          'create_anonymous_token:vsf-ct-dev',
-          'manage_my_profile:vsf-ct-dev',
-          'manage_customer_groups:vsf-ct-dev',
-          'view_categories:vsf-ct-dev',
-          'introspect_oauth_tokens:vsf-ct-dev',
-          'manage_my_payments:vsf-ct-dev',
-          'manage_my_orders:vsf-ct-dev',
-          'manage_my_shopping_lists:vsf-ct-dev',
-          'view_published_products:vsf-ct-dev'
+          'manage_products:vsf-demo',
+          'create_anonymous_token:vsf-demo',
+          'manage_my_profile:vsf-demo',
+          'manage_customer_groups:vsf-demo',
+          'view_categories:vsf-demo',
+          'introspect_oauth_tokens:vsf-demo',
+          'manage_my_payments:vsf-demo',
+          'manage_my_orders:vsf-demo',
+          'manage_my_shopping_lists:vsf-demo',
+          'view_published_products:vsf-demo'
         ]
       },
       i18n: {
