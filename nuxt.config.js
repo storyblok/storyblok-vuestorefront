@@ -70,22 +70,35 @@ export default {
     ['@vue-storefront/nuxt-theme'],
     ['@vue-storefront/commercetools/nuxt', {
       api: {
-        uri: 'https://api.commercetools.com/vsf-ct-dev/graphql',
-        authHost: 'https://auth.sphere.io',
-        projectKey: 'vsf-ct-dev',
-        clientId: 'RT4iJGDbDzZe4b2E6RyeNe9s',
-        clientSecret: '5eBt3yfZJWw1j7V6kXjfKXpuFP-YQXpg',
+        uri: 'https://api.europe-west1.gcp.commercetools.com/vsf-demo/graphql',
+        authHost: 'https://auth.europe-west1.gcp.commercetools.com',
+        projectKey: 'vsf-demo',
+        clientId: 'OcT-IwFuMjS5byN50RBPBdPz',
+        clientSecret: 'fANkvc525kWYgt6MpDBDLl1So7vWkCsD',
         scopes: [
-          'manage_products:vsf-ct-dev',
-          'create_anonymous_token:vsf-ct-dev',
-          'manage_my_profile:vsf-ct-dev',
-          'manage_customer_groups:vsf-ct-dev',
-          'view_categories:vsf-ct-dev',
-          'introspect_oauth_tokens:vsf-ct-dev',
-          'manage_my_payments:vsf-ct-dev',
-          'manage_my_orders:vsf-ct-dev',
-          'manage_my_shopping_lists:vsf-ct-dev',
-          'view_published_products:vsf-ct-dev'
+          'view_products:vsf-demo',
+          'manage_my_profile:vsf-demo',
+          'view_shopping_lists:vsf-demo',
+          'view_states:vsf-demo',
+          'view_project_settings:vsf-demo',
+          'view_stores:vsf-demo',
+          'view_orders:vsf-demo',
+          'view_discount_codes:vsf-demo',
+          'view_shipping_methods:vsf-demo',
+          'view_order_edits:vsf-demo',
+          'introspect_oauth_tokens:vsf-demo',
+          'manage_my_orders:vsf-demo',
+          'view_tax_categories:vsf-demo',
+          'view_cart_discounts:vsf-demo',
+          'view_types:vsf-demo',
+          'view_payments:vsf-demo',
+          'create_anonymous_token:vsf-demo',
+          'manage_my_payments:vsf-demo',
+          'view_categories:vsf-demo',
+          'view_messages:vsf-demo',
+          'manage_my_shopping_lists:vsf-demo',
+          'view_customer_groups:vsf-demo',
+          'view_customers:vsf-demo'
         ]
       },
       i18n: {
@@ -96,8 +109,17 @@ export default {
   modules: [
     'nuxt-i18n',
     'cookie-universal-nuxt',
-    'vue-scrollto/nuxt'
+    'vue-scrollto/nuxt',
+    // Doc: https://github.com/storyblok/storyblok-nuxt
+    [
+      'storyblok-nuxt',
+      {
+        accessToken: 'g8UkqYs6SyoqHkY6RCudkwtt',
+        cacheProvider: 'memory'
+      }
+    ],
   ],
+  plugins: ['~/plugins/cms'],
   i18n: {
     currency: 'USD',
     country: 'US',

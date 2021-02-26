@@ -1,290 +1,59 @@
 <template>
-  <div id="connected-home">
-    <h1>Connected</h1>
-    <LazyHydrate when-idle>
-      <SfHero class="hero">
-        <SfHeroItem
-          v-for="(hero, i) in heroes"
-          :key="i"
-          :title="hero.title"
-          :subtitle="hero.subtitle"
-          :button-text="hero.buttonText"
-          :background="hero.background"
-          :image="hero.image"
-          :class="hero.className"
-        />
-      </SfHero>
-    </LazyHydrate>
-
-    <LazyHydrate when-visible>
-      <SfBannerGrid :banner-grid="1" class="banner-grid">
-        <template v-for="item in banners" v-slot:[item.slot]>
-          <SfBanner
-            :key="item.slot"
-            :title="item.title"
-            :subtitle="item.subtitle"
-            :description="item.description"
-            :button-text="item.buttonText"
-            :image="item.image"
-            :class="item.class"
-          />
-        </template>
-      </SfBannerGrid>
-    </LazyHydrate>
-
-    <LazyHydrate when-visible>
-      <div class="similar-products">
-        <SfHeading title="Match with it" :level="3"/>
-        <nuxt-link :to="localePath('/c/women')" class="smartphone-only">See all</nuxt-link>
-      </div>
-    </LazyHydrate>
-
-    <LazyHydrate when-visible>
-        <SfCarousel class="carousel" :settings="{ peek: 16, breakpoints: { 1023: { peek: 0, perView: 2 } } }">
-          <template #prev="{go}">
-            <SfArrow
-              aria-label="prev"
-              class="sf-arrow--left sf-arrow--long"
-              @click="go('prev')"
-            />
-          </template>
-          <template #next="{go}">
-            <SfArrow
-              aria-label="next"
-              class="sf-arrow--right sf-arrow--long"
-              @click="go('next')"
-            />
-          </template>
-          <SfCarouselItem class="carousel__item" v-for="(product, i) in products" :key="i">
-            <SfProductCard
-              data-cy="home-url_product"
-              :title="product.title"
-              :image="product.image"
-              :regular-price="product.price.regular"
-              :max-rating="product.rating.max"
-              :score-rating="product.rating.score"
-              :show-add-to-cart-button="true"
-              :is-on-wishlist="product.isOnWishlist"
-              link="/"
-              class="carousel__item__product"
-              @click:wishlist="toggleWishlist(i)"
-            />
-          </SfCarouselItem>
-        </SfCarousel>
-    </LazyHydrate>
-
-    <LazyHydrate when-visible>
-      <SfCallToAction
-        title="Subscribe to Newsletters"
-        button-text="Subscribe"
-        description="Be aware of upcoming sales and events. Receive gifts and special offers!"
-        image="/homepage/newsletter.webp"
-        class="call-to-action"
-      />
-    </LazyHydrate>
-
-    <LazyHydrate when-visible>
-      <InstagramFeed />
-    </LazyHydrate>
-
-    <LazyHydrate when-visible>
-      <MobileStoreBanner/>
-    </LazyHydrate>
-  </div>
+  <sf-page
+    id="home"
+    v-if="story.content.component"
+    :key="story.content._uid"
+    :blok="story.content" />
 </template>
+
 <script>
-import {
-  SfHero,
-  SfBanner,
-  SfCallToAction,
-  SfSection,
-  SfCarousel,
-  SfProductCard,
-  SfImage,
-  SfBannerGrid,
-  SfHeading,
-  SfArrow,
-  SfButton
-} from '@storefront-ui/vue';
-import InstagramFeed from '~/components/InstagramFeed.vue';
-import MobileStoreBanner from '~/components/MobileStoreBanner.vue';
-import LazyHydrate from 'vue-lazy-hydration';
-import { useProduct, productGetters } from '@vue-storefront/commercetools'
-import { computed } from '@vue/composition-api';
-
 export default {
-  name: 'ConnectedHome',
-  setup(context) {
-    const id = '2172e7f0-8348-484a-a4e2-7c4b72006038'
-    const { products, search } = useProduct({ id })
-
-    // search({ id })
-
-    const product = computed(() => productGetters.getAttributes(product.value[0]))
-
-    console.log(`Result: ${products}`)
-    console.log(products)
-
+  data () {
     return {
-      products
-    };
-  },
-  components: {
-    InstagramFeed,
-    SfHero,
-    SfBanner,
-    SfCallToAction,
-    SfSection,
-    SfCarousel,
-    SfProductCard,
-    SfImage,
-    SfBannerGrid,
-    SfHeading,
-    SfArrow,
-    SfButton,
-    MobileStoreBanner,
-    LazyHydrate
-  },
-  data() {
-    return {
-      heroes: [
-        {
-          title: 'Colorful summer dresses are already in store',
-          subtitle: 'SUMMER COLLECTION 2019',
-          buttonText: 'Learn more',
-          background: '#eceff1',
-          image: '/homepage/bannerH.webp',
-          link: '/c/women/women-clothing-shirts'
-        },
-        {
-          title: 'Colorful summer dresses are already in store',
-          subtitle: 'SUMMER COLLECTION 2019',
-          buttonText: 'Learn more',
-          background: '#efebe9',
-          image: '/homepage/bannerA.webp',
-          link: '/c/women/women-shoes-sandals',
-          className:
-            'sf-hero-item--position-bg-top-left sf-hero-item--align-right'
-        },
-        {
-          title: 'Colorful summer dresses are already in store',
-          subtitle: 'SUMMER COLLECTION 2019',
-          buttonText: 'Learn more',
-          background: '#fce4ec',
-          image: '/homepage/bannerB.webp',
-          link: '/c/women/women-clothing-dresses'
-        }
-      ],
-      banners: [
-        {
-          slot: 'banner-A',
-          subtitle: 'Dresses',
-          title: 'Cocktail & Party',
-          description:
-            'Find stunning women\'s cocktail dresses and party dresses. Stand out in lace and metallic cocktail dresses from all your favorite brands.',
-          buttonText: 'Shop now',
-          image: {
-            mobile: '/homepage/bannerB.webp',
-            desktop: '/homepage/bannerF.webp'
-          },
-          class: 'sf-banner--slim desktop-only',
-          link: '/c/women/women-clothing-skirts'
-        },
-        {
-          slot: 'banner-B',
-          subtitle: 'Dresses',
-          title: 'Linen Dresses',
-          description:
-            'Find stunning women\'s cocktail dresses and party dresses. Stand out in lace and metallic cocktail dresses from all your favorite brands.',
-          buttonText: 'Shop now',
-          image: '/homepage/bannerE.webp',
-          class: 'sf-banner--slim banner-central desktop-only',
-          link: '/c/women/women-clothing-dresses'
-        },
-        {
-          slot: 'banner-C',
-          subtitle: 'T-Shirts',
-          title: 'The Office Life',
-          image: '/homepage/bannerC.webp',
-          class: 'sf-banner--slim banner__tshirt',
-          link: '/c/women/women-clothing-shirts'
-        },
-        {
-          slot: 'banner-D',
-          subtitle: 'Summer Sandals',
-          title: 'Eco Sandals',
-          image: '/homepage/bannerG.webp',
-          class: 'sf-banner--slim',
-          link: '/c/women/women-shoes-sandals'
-        }
-      ],
-      products: [
-        {
-          title: 'Cream Beach Bag',
-          image: '/homepage/productA.webp',
-          price: { regular: '50.00 $' },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: true
-        },
-        {
-          title: 'Cream Beach Bag',
-          image: '/homepage/productB.webp',
-          price: { regular: '50.00 $' },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
-        },
-        {
-          title: 'Cream Beach Bag',
-          image: '/homepage/productC.webp',
-          price: { regular: '50.00 $' },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
-        },
-        {
-          title: 'Cream Beach Bag',
-          image: '/homepage/productA.webp',
-          price: { regular: '50.00 $' },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
-        },
-        {
-          title: 'Cream Beach Bag',
-          image: '/homepage/productB.webp',
-          price: { regular: '50.00 $' },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
-        },
-        {
-          title: 'Cream Beach Bag',
-          image: '/homepage/productC.webp',
-          price: { regular: '50.00 $' },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
-        },
-        {
-          title: 'Cream Beach Bag',
-          image: '/homepage/productA.webp',
-          price: { regular: '50.00 $' },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
-        },
-        {
-          title: 'Cream Beach Bag',
-          image: '/homepage/productB.webp',
-          price: { regular: '50.00 $' },
-          rating: { max: 5, score: 4 },
-          isOnWishlist: false
-        }
-      ]
-    };
-  },
-  methods: {
-    toggleWishlist(index) {
-      this.products[index].isOnWishlist = !this.products[index].isOnWishlist;
+      story: { content: {} }
     }
+  },
+  mounted () {
+    // Use the input event for instant update of content
+    this.$storybridge.on('input', (event) => {
+      if (event.story.id === this.story.id) {
+        this.story.content = event.story.content
+      }
+    })
+    // Use the bridge to listen the events
+    this.$storybridge.on(['published', 'change'], (event) => {
+      this.$nuxt.$router.go({
+        path: this.$nuxt.$router.currentRoute,
+        force: true,
+      })
+    })
+  },
+  asyncData (context) {
+    // We are getting only the draft version of the content in this example.
+    // In real world project you should ask for correct version of the content
+    // according to the environment you are deploying to.
+    // const version = context.query._storyblok || context.isDev ? 'draft' : 'published'
+
+    // const fullSlug = (context.route.path == '/' || context.route.path == '') ? 'home' : context.route.path
+
+    // Load the JSON from the API - loadig the home content (index page)
+    return context.app.$storyapi.get(`cdn/stories/ConnectedHome`, {
+      version: 'draft'
+    }).then((res) => {
+      return res.data
+    }).catch((res) => {
+      if (!res.response) {
+        console.error(res)
+        context.error({ statusCode: 404, message: 'Failed to receive content form api' })
+      } else {
+        console.error(res.response.data)
+        context.error({ statusCode: res.response.status, message: res.response.data })
+      }
+    })
   }
-};
+}
 </script>
+
 
 <style lang="scss" scoped>
 #home {
