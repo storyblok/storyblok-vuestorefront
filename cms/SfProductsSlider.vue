@@ -1,6 +1,6 @@
 <template>
   <div v-editable="blok">
-    <h2>{{ blok.description }}</h2>
+    <SfHeading :title="blok.description" :level="3"/>
     <SfCarousel
       v-if="!loading" class="product-carousel">
       <SfCarouselItem v-for="(product, i) in list" :key="i">
@@ -24,7 +24,7 @@
 
 <script lang='ts'>
 import Vue from 'vue';
-import { SfCarousel, SfProductCard } from '@storefront-ui/vue';
+import { SfCarousel, SfProductCard, SfHeading } from '@storefront-ui/vue';
 import { useProduct, productGetters } from "@vue-storefront/commercetools";
 import { ref, onMounted } from '@vue/composition-api'
 
@@ -32,7 +32,8 @@ export default Vue.extend({
   name: 'SfProductsSlider',
   components: {
     SfCarousel,
-    SfProductCard
+    SfProductCard,
+    SfHeading
   },
   props: {
     blok: {}
